@@ -95,7 +95,8 @@ master 시스템에서만 구성
 	
 	
 	# kubeadm init
-	(오류시 
+	(	containerd.io 1.3.7 이상 시 문제가 발생하는것으로 보임
+		containerd 데몬에서 cri옵션이 버그를 야기 시키는것으로 보임
 		/etc/containerd#  sudo rm /etc/containerd/config.toml
 		/etc/containerd#  sudo systemctl restart containerd
 		/etc/containerd#  sudo kubeadm init
