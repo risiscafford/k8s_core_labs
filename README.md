@@ -91,8 +91,15 @@ master, node1,node2, node3 시스템에 kubeadm, kubectl, kubelet 설치 및 동
 ## 3. Master 컴포넌트 구성및 네트워크 환경구성
 master 시스템에서만 구성 
 ### Creating a single control-plane cluster with kubeadm
-
+	
+	
+	
 	# kubeadm init
+	(오류시 
+		/etc/containerd#  sudo rm /etc/containerd/config.toml
+		/etc/containerd#  sudo systemctl restart containerd
+		/etc/containerd#  sudo kubeadm init
+	)
 	...
 	To start using your cluster, you need to run the following as a regular user:
 
