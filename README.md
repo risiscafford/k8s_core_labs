@@ -130,6 +130,33 @@ Weave Net works
 	# kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 	# kubectl get nodes
+	
+### Weave 중단으로 인한 대체
+		# CNI(컨테이너 네트워크 인터페이스) 기반 Pod 네트워크 추가 기능을 배포해야 Pod가 서로 통신할 수 있습니다. 
+		네트워크를 설치하기 전에 클러스터 DNS(CoreDNS)가 시작되지 않습니다.
+	kubectl get nodes
+	NAME       STATUS     ROLES           AGE     VERSION
+	master     NotReady   control-plane   7m31s   v1.24.3
+
+	# Pod 네트워크가 호스트 네트워크와 겹치지 않도록 주의해야함. 
+	# Calico 설치
+	kubectl create -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
+	kubectl create -f https://projectcalico.docs.tigera.io/manifests/custom-resources.yaml
+
+	# node 초기화 될때까지 기다림
+	watch kubectl get pods -n calico-system
+
+	kubectl get pods -n calico-system
+	NAME                                      READY   STATUS    RESTARTS   AGE
+	calico-kube-controllers-657d56796-nrxbx   0/1     Pending   0          75s
+	calico-node-w2n8f                         1/1     Running   0          75s
+	calico-typha-5d9f7ffbf4-mx846             1/1     Running   0          75s
+
+
+	# 다시 확인
+	kubectl get nodes
+	NAME                 STATUS   ROLES           AGE   VERSION
+	master.example.com   Ready    control-plane   15m   v1.25.3
 
 ## 4. Worker Node 구성
 node1, node2, node3에서 실행
