@@ -142,9 +142,14 @@ Weave Net works
 	# Calico 설치
 	kubectl create -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
 	kubectl create -f https://projectcalico.docs.tigera.io/manifests/custom-resources.yaml
+	
+	
 
 	# node 초기화 될때까지 기다림
 	watch kubectl get pods -n calico-system
+	
+	# 초기화 안되면 아래 설치
+	kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 	kubectl get pods -n calico-system
 	NAME                                      READY   STATUS    RESTARTS   AGE
